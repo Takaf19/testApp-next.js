@@ -34,6 +34,7 @@ export function getSortedPostsData() {
   })
 }
 
+// ページIdを返す関数
 // posts ディレクトリに存在する
 // ファイル名（.md ファイルを除く）のリストを返します。
 export function getAllPostIds() {
@@ -59,4 +60,20 @@ export function getAllPostIds() {
       }
     }
   })
+}
+
+
+// id に基づいてブログの投稿データを返す処理
+export function getPostData(id) {
+  const fullPath = path.join(postsDirectory, `${id}.md`)
+  const fileContents = fs.readFileSync(fullPath, 'utf8')
+
+  // 投稿のメタデータ部分を解析するために gray-matter を使う
+  const matterResult = matter(fileContents)
+
+  // データを id と組み合わせる
+  return {
+    id,
+    ...matterResult.data
+  }
 }
