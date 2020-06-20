@@ -33,3 +33,30 @@ export function getSortedPostsData() {
     }
   })
 }
+
+// posts ディレクトリに存在する
+// ファイル名（.md ファイルを除く）のリストを返します。
+export function getAllPostIds() {
+  const fileNames = fs.readdirSync(postsDirectory)
+
+  // 以下のような配列を返します:
+  // [
+  //   {
+  //     params: {
+  //       id: 'ssg-ssr'
+  //     }
+  //   },
+  //   {
+  //     params: {
+  //       id: 'pre-rendering'
+  //     }
+  //   }
+  // ]
+  return fileNames.map(fileName => {
+    return {
+      params: {
+        id: fileName.replace(/\.md$/, '')
+      }
+    }
+  })
+}
